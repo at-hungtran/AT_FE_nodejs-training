@@ -1,15 +1,17 @@
 const Photographer = require('../model/photographer');
 
 exports.checkLogin = (req, res, next) => {
-  password = req.body.picture[0].password; 
-  id = req.body.picture[0].photographerId;
-  
-  Photographer.getPhotographer(id, (err, callback) => {
+  const password = req.headers.password; 
+  const userName = req.headers.username;
+ 
+  Photographer.getPhotographerByUserName(userName, (err, callback) => {
     if (err) throw err;
-    if (callback) {
-      Photographer.comparePassword(password, callback.password, (err, isPasswordMatch) => {
+    if (callback.length) {
+      Photographer.comparePassword(password, callback[0].password, (err, isPasswordMatch) => {
         if (err) throw err;
         if (isPasswordMatch) {
+          req.photographerId = callback[0]._id;
+          delete req.headers.password;
           next();
         }
         else {
@@ -20,7 +22,7 @@ exports.checkLogin = (req, res, next) => {
       });
     }
     else {
-      res.status(404).json({
+      res.status(401).json({
         error: 'auth failt',
       })
     }

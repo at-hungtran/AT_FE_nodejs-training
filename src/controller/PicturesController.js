@@ -1,16 +1,17 @@
 const Picture = require('../model/picture');
 
 exports.create = (req, res, next) => {
-  console.log(req.body.picture[0].photographerId);
-  const picture = req.body.picture.map(item => 
+  const photographerId = req.photographerId;
+  const picture = req.files.map(item => 
     new Picture({
-      photographerId: item.photographerId,
-      name: item.name
+      photographerId: photographerId,
+      name: item.filename
     })
   )
+
   Picture.createManyPicture(picture, (err, callback) => {
     if (err) throw err;
-    res.status(200).send(callback);
+    res.status(200).json(callback);
   });
 }
 
@@ -28,8 +29,8 @@ exports.index = (req, res, next) => {
 }
 
 exports.show = (req, res, next) => {
-  const id = req.params.pictureId;
-  Picture.getPicture(id, (err, callback) => {
+  const userName = req.params.userName;
+  Picture.getPicture(userName, (err, callback) => {
     if (err) throw err;
     res.status(200).json(callback);
   });

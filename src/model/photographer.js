@@ -10,6 +10,10 @@ const photographerSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  userName: {
+    type: String,
+    required: true
+  },
   password: {
     type: String,
     required: true
@@ -27,7 +31,11 @@ module.exports.getPhotographers = (callback) => {
 }
 
 module.exports.getPhotographer = (id, callback) => {
-  Photographer.findById(id, callback);
+  Photographer.find({ _id: id }, callback);
+}
+
+module.exports.getPhotographerByUserName = (userName, callback) => {
+  Photographer.find({ userName: userName }, callback);
 }
 
 module.exports.updatePhotographer = (id, body, callback) => {
