@@ -1,7 +1,6 @@
 const Photographer = require('../model/photographer');
-const jwt = require('jsonwebtoken');
 
-exports.create  = (req, res, next) => {
+exports.create = (req, res, next) => {
   const password = req.body.password;
   const userName = req.body.userName;
   Photographer.getPhotographerByUserName(userName, (err, callback) => {

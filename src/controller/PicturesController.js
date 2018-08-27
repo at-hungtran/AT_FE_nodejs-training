@@ -1,4 +1,5 @@
 const Picture = require('../model/picture');
+const del = require('del');
 
 exports.create = (req, res, next) => {
   const photographerId = req.photographerId;
@@ -37,7 +38,6 @@ exports.show = (req, res, next) => {
 }
 
 exports.update = (req, res, next) => {
-  console.log('update');
   const id = req.params.pictureId;
   const body = req.body;
   Picture.updatePicture(id, body, (err, callback) => {
@@ -47,10 +47,18 @@ exports.update = (req, res, next) => {
 }
 
 exports.delete = (req, res, next) => {
-  console.log('delete');
   const id = req.params.pictureId;
-  Picture.deletePicture(id, (err, callback) => {
+  const folderName = 'uploads';
+  
+  Picture.getPicture (id, (err, callback) => {
     if (err) throw err;
-    res.status(200).json(callback);
+    Picture.delfile(folderName, callback.name, (paths => {
+      console.log('Deleted files and folders:\n', paths.join('\n'));
+    }))
+
+    Picture.deletePicture(id, (err, callback) => {
+      if (err) throw err;
+      res.status(200).json(callback);
+    });
   });
 }

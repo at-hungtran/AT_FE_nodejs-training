@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const del = require('del');
 
 const pictureSchema = mongoose.Schema({
   photographerId: {
@@ -36,4 +37,8 @@ module.exports.updatePicture = (id, body, callback) => {
 
 module.exports.deletePicture = (id, callback) => {
   Picture.deleteOne({ _id: id }, callback);
+}
+
+module.exports.delfile = (folder, fileName, callback) => {
+  del([`${folder}/${fileName}`]).then(callback);
 }
