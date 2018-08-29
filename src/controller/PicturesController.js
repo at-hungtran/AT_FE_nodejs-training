@@ -1,16 +1,18 @@
 const Picture = require('../model/picture');
+const del = require('del');
 
 exports.create = (req, res, next) => {
-  console.log(req.body.picture[0].photographerId);
-  const picture = req.body.picture.map(item => 
+  const photographerId = req.photographerId;
+  const picture = req.files.map(item => 
     new Picture({
-      photographerId: item.photographerId,
-      name: item.name
+      photographerId: photographerId,
+      name: item.filename
     })
   )
+
   Picture.createManyPicture(picture, (err, callback) => {
     if (err) throw err;
-    res.status(200).send(callback);
+    res.status(200).json(callback);
   });
 }
 
@@ -28,15 +30,14 @@ exports.index = (req, res, next) => {
 }
 
 exports.show = (req, res, next) => {
-  const id = req.params.pictureId;
-  Picture.getPicture(id, (err, callback) => {
+  const userName = req.params.userName;
+  Picture.getPicture(userName, (err, callback) => {
     if (err) throw err;
     res.status(200).json(callback);
   });
 }
 
 exports.update = (req, res, next) => {
-  console.log('update');
   const id = req.params.pictureId;
   const body = req.body;
   Picture.updatePicture(id, body, (err, callback) => {
@@ -46,10 +47,18 @@ exports.update = (req, res, next) => {
 }
 
 exports.delete = (req, res, next) => {
-  console.log('delete');
   const id = req.params.pictureId;
-  Picture.deletePicture(id, (err, callback) => {
+  const folderName = 'uploads';
+  
+  Picture.getPicture (id, (err, callback) => {
     if (err) throw err;
-    res.status(200).json(callback);
+    Picture.delfile(folderName, callback.name, (paths => {
+      console.log('Deleted files and folders:\n', paths.join('\n'));
+    }))
+
+    Picture.deletePicture(id, (err, callback) => {
+      if (err) throw err;
+      res.status(200).json(callback);
+    });
   });
 }

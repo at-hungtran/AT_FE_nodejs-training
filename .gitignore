@@ -1,7 +1,15 @@
 /node_modules/
 
+<<<<<<< HEAD
+/package-lock.json
+
+/package.json
+
+/uploads/
+=======
 /package-lock.json/
 
 /package.json/
 
 /uploads/
+>>>>>>> nodejs-1
