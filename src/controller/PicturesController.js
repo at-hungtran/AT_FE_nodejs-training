@@ -1,5 +1,4 @@
 const Picture = require('../model/picture');
-const del = require('del');
 
 exports.create = (req, res, next) => {
   const photographerId = req.photographerId;

@@ -1,9 +1,9 @@
 const app = require('./src/lib/Express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const port = process.env.PORT || 3000;
-const dbName = 'photographer';
-mongoose.connect(`mongodb://127.0.0.1:27017/${dbName}`);
+mongoose.connect(process.env.DB_HOST + process.env.DB_NAME);
 
 if (!module.parent) {
   app.listen(port, onStarted);
