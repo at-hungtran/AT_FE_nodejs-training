@@ -17,10 +17,14 @@ const photographerSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  level: {
+    type: Number,
+    required: true
   }
 });
 
-const Photographer = module.exports =  mongoose.model('photographer', photographerSchema, 'photographerCol');
+const Photographer = module.exports = mongoose.model('photographer', photographerSchema, 'photographerCol');
 
 module.exports.createPhotographer = (photographer, callback) => {
   photographer.save(callback);
@@ -30,12 +34,8 @@ module.exports.getPhotographers = (callback) => {
   Photographer.find(callback);
 }
 
-module.exports.getPhotographer = (id, callback) => {
-  Photographer.find({ _id: id }, callback);
-}
-
-module.exports.getPhotographerByUserName = (userName, callback) => {
-  Photographer.find({ userName: userName }, callback);
+module.exports.getPhotographer = (condition, callback) => {
+  Photographer.find(condition, callback);
 }
 
 module.exports.updatePhotographer = (id, body, callback) => {
