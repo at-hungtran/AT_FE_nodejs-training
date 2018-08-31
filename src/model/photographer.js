@@ -24,7 +24,7 @@ const photographerSchema = mongoose.Schema({
   }
 });
 
-const Photographer = module.exports = mongoose.model('photographer', photographerSchema, 'photographerCol');
+const Photographer = module.exports = mongoose.model('photographer', photographerSchema);
 
 module.exports.createPhotographer = (photographer, callback) => {
   photographer.save(callback);

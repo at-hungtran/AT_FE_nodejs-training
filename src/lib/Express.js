@@ -3,7 +3,7 @@ const routes = require('../routes');
 const bodyParser = require('body-parser');
 const HttpStatus = require('http-status');
 const validate = require('express-validation');
-const APIError = require('../../APIError');
+const APIError = require('./APIError');
 
 const app = express();
 

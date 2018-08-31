@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const validPassword = Joi.extend((joi) => ({
-  base: Joi.string(),
+  base: joi.string(),
   name: 'string',
   language: {
     error: 'username can not in to password'
@@ -10,7 +10,11 @@ const validPassword = Joi.extend((joi) => ({
     {
       name: 'validPassword',
       validate(params, value, state, options) {
-        const name = state.parent.userNames.split('').filter((letter, index) => index < 4).join('');
+        const name = state.parent.userNames
+        .split('')
+        .filter((letter, index) => index < 4)
+        .join('');
+        
         let isValid = true;
         let sumLetter = '';
 
