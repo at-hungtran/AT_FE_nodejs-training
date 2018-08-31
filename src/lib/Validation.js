@@ -10,21 +10,22 @@ const validPassword = Joi.extend((joi) => ({
     {
       name: 'validPassword',
       validate(params, value, state, options) {
-        const name = state.parent.userNames.split('').filter((letter, index) => index < 4).join('');
-        let isValid = true;
-        let sumLetter = '';
+        // const name = state.parent.userNames.split('').filter((letter, index) => index < 4).join('');
+        // let isValid = true;
+        // let sumLetter = '';
 
-        for(let i = 0; i < value.length; i++) {
-          if (name[0] === value[i]) {
-            for (let j = i; j < i + name.length; j++) {
-              sumLetter += value[j];
-            }
-            if (sumLetter === name) {
-              isValid = false;
-            }
-          }
-          sumLetter = '';
-        }
+        // for(let i = 0; i < value.length; i++) {
+        //   if (name[0] === value[i]) {
+        //     for (let j = i; j < i + name.length; j++) {
+        //       sumLetter += value[j];
+        //     }
+        //     if (sumLetter === name) {
+        //       isValid = false;
+        //     }
+        //   }
+        //   sumLetter = '';
+        // }
+        
         if (!isValid) {
           return this.createError('string.error', { v: value }, state, options);
         }
