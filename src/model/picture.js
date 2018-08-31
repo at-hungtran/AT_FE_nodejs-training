@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const del = require('del');
 
 const pictureSchema = mongoose.Schema({
-  photographerId: {
+  albumId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'photographer',
     required: true
   },
   name: {
@@ -13,7 +12,7 @@ const pictureSchema = mongoose.Schema({
   }
 });
 
-const Picture = module.exports = mongoose.model('picture', pictureSchema, 'pictureCol');
+const Picture = module.exports = mongoose.model('picture', pictureSchema);
 
 module.exports.createPicture = (picture, callback) => {
   picture.save(callback)
@@ -24,7 +23,7 @@ module.exports.createManyPicture = (picture, callback) => {
 }
 
 module.exports.getPictures = (callback) => {
-  Picture.find(callback).populate('photographerId');
+  Picture.find(callback);
 }
 
 module.exports.getPicture = (id, callback) => {

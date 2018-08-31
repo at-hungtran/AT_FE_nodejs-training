@@ -1,10 +1,10 @@
 const Picture = require('../model/picture');
 
 exports.create = (req, res, next) => {
-  const photographerId = req.photographerId;
+  const albumId = req.headers.albumid;
   const picture = req.files.map(item => 
     new Picture({
-      photographerId: photographerId,
+      albumId: albumId,
       name: item.filename
     })
   )
