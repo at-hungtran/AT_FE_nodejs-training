@@ -4,4 +4,6 @@ const albumsController = require('../controller/AlbumsController');
 
 routes.post('/', albumsController.create);
 
+routes.get('/', albumsController.index);
+
 module.exports = routes;
