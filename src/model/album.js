@@ -7,7 +7,6 @@ const albumSchema = mongoose.Schema({
   },
   photographerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'photographer',
     required: true
   },
 });

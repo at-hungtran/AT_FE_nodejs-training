@@ -10,26 +10,24 @@ const validPassword = Joi.extend((joi) => ({
     {
       name: 'validPassword',
       validate(params, value, state, options) {
-        const name = state.parent.userNames
-        .split('')
-        .filter((letter, index) => index < 4)
-        .join('');
-        
-        let isValid = true;
+        const userName = state.parent.userNames;
         let sumLetter = '';
+        let isValid = true;
 
-        for(let i = 0; i < value.length; i++) {
-          if (name[0] === value[i]) {
-            for (let j = i; j < i + name.length; j++) {
-              sumLetter += value[j];
-            }
-            if (sumLetter === name) {
-              isValid = false;
-            }
+        userName.split('').map((item, index) => {
+          if (userName.charCodeAt(index) >= 65 && userName.charCodeAt(index) <= 90 
+          || userName.charCodeAt(index) >= 97 && userName.charCodeAt(index) <= 122) {
+            sumLetter += item;
+          } else {
+            sumLetter += ' ';
           }
-          sumLetter = '';
-        }
-        if (!isValid) {
+        });
+        
+        sumLetter.split(' ').map(item => {
+          isValid = value.includes(item);
+        });
+
+        if (isValid) {
           return this.createError('string.error', { v: value }, state, options);
         }
       }
