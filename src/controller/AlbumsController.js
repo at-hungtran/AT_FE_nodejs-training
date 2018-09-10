@@ -3,10 +3,10 @@ const Photographer = require('../model/photographer');
 
 exports.create = (req, res, next) => {
   const photographerId = req.body.photographerId;
-  const condition = {
-    _id: photographerId
-  }
+  const condition = { _id: photographerId }
+
   Photographer.getPhotographer(condition, (err, callback) => {
+    console.log(callback.length);
     if (err) throw err;
     if (callback.length) {
       const album = new Album({
@@ -23,5 +23,12 @@ exports.create = (req, res, next) => {
         error: 'photographer not found'
       });
     }
+  })
+}
+
+exports.index = (req, res, next) => {
+  Album.getAlbums((err, callback) => {
+    if (err) res.json(err);
+    res.status(200).json(callback);
   })
 }
